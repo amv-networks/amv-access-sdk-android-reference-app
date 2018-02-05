@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">amv Access Demo App</string>
+    <string name="revoke_alert_title" formatted="false">revoke certificate for %s?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="unknown_mileage_text">unknown</string>
+
+    <string name="initializing">initializing …</string>
+    <string name="broadcasting">broadcasting …</string>
+    <string name="updating">updating …</string>
+    <string name="loading">loading …</string>
+    <string name="refreshing">refreshing …</string>
+    <string name="load_access_certificate">load access certificates …</string>
+    <string name="load_device_certificate">load device certificate …</string>
+
+    <string name="idle">idle</string>
+    <string name="bluetooth_not_available">bluetooth n/a</string>
+    <string name="vehicle_connected">vehicle connected</string>
+
+    <string name="charging_plug">charging plug</string>
+    <string name="key">key</string>
+    <string name="doors">doors</string>
+    <string name="mileage">mileage</string>
+
+    <string name="lock_doors">lock doors</string>
+    <string name="unlock_doors">unlock doors</string>
+    <string name="doors_locked">doors locked</string>
+    <string name="doors_unlocked">doors unlocked</string>
+    <string name="door_lock_state_unknown">door lock state unknown</string>
+    <string name="lock_doors_btn_text">lock doors</string>
+
+    <string name="failed_to_start_broadcasting">failed to start broadcasting</string>
+    <string name="cannot_get_initial_vehicle_state">cannot get initial vehicle state</string>
+    <string name="cannot_get_vehicle_state">cannot get vehicle state</string>
+    <string name="failure_response_received">failure response received</string>
+    <string name="could_not_send_command">could not send command</string>
+    <string name="bluetooth_module_not_ready_title">bluetooth module not ready</string>
+    <string name="bluetooth_module_not_ready_text">bluetooth is not yet ready to send commands</string>
+    <string name="door_lock_state_is_unknown">door locks state is UNKNOWN</string>
+    <string name="cannot_execute_operation_cancelling">cannot execute operation - cancelling</string>
+    <string name="initialization_error">initialization error</string>
+    <string name="certificate_refresh_error">certificate download error</string>
+    <string name="certificate_revoke_error">certificate revoke error</string>
+</resources>
