@@ -30,7 +30,6 @@ Integration tests currently cover following scenarios:
 * downloading a device certificate for that keypair
 * downloading access certificates for that device certificate
 * visibility of the correct serials/count for the certificates
-* deleting an access certificate
 
 ## how to use the amv Access SDK in your own app
 See [jitpack.io/#amv-networks/amv-access-sdk-android](https://jitpack.io/#amv-networks/amv-access-sdk-android)
@@ -110,3 +109,8 @@ locally stored copy will also be removed. Subsequently `onCertificateRevoked();`
 
 Once access certificates are present, they can be displayed to the user. When the user selects a
 certificate, bluetooth broadcasting will be started and the app tries to connect to the vehicle.
+
+# build
+```bash
+$ ./gradlew clean assembleRelease --refresh-dependencies --stacktrace
+```
