@@ -33,7 +33,7 @@ Integration tests currently cover following scenarios:
 * deleting an access certificate
 
 ## how to use the amv Access SDK in your own app
-See [jitpack.io/#amvnetworks/amv-access-sdk-android](https://jitpack.io/#amvnetworks/amv-access-sdk-android)
+See [jitpack.io/#amv-networks/amv-access-sdk-android](https://jitpack.io/#amv-networks/amv-access-sdk-android)
 for all available versions.
 
 Add the following in your root `build.gradle` at the end of repositories:
@@ -53,7 +53,7 @@ Include it in the `dependencies` block of your `build.gradle`:
 ```groovy
 dependencies {
     // ...
-    implementation "com.github.amvnetworks.amv-access-sdk-android:amv-hm-access-sdk:${accessSdkImplVersion}"
+    implementation "com.github.amv-networks.amv-access-sdk-android:amv-hm-access-sdk:${accessSdkImplVersion}"
 }
 ```
 
