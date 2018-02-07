@@ -28,4 +28,24 @@ allprojects {
         google()
         maven { url 'https://jitpack.io' }
     }
+
+    project.ext {
+        buildToolsVersion = '27.0.3'
+
+        minSdkVersion = 23
+        targetSdkVersion = 27
+        compileSdkVersion = 27
+
+        versionCode = 2
+        versionName = '1.1'
+
+        amvAccessSdkVersion = 'v0.0.2'
+
+        leakcanaryVersion = '1.5.4'
+        butterknifeVersion = '8.8.1'
+
+        junitVersion = '4.12'
+        espressoVersion = '3.0.1'
+        supportTestVersion = '1.0.1'
+    }
 }

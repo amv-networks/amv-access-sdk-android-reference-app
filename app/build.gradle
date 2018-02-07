@@ -1,17 +1,21 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
+
     defaultConfig {
         applicationId "org.amv.access.sdk.sample"
-        minSdkVersion 23
-        targetSdkVersion 26
-        multiDexEnabled true
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
 
-        versionCode 1
-        versionName "1.0"
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
 
         // start - workaround for UnsatisfiedLinkError
         ndk {
@@ -60,30 +64,24 @@ android {
 }
 
 dependencies {
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation(name: 'hmkit-android', version: '1.0.11', ext: 'aar')
 
-    implementation 'com.github.amv-networks.amv-access-sdk-android:amv-hm-access-sdk:v0.0.1'
+    implementation "com.github.amv-networks.amv-access-sdk-android:amv-hm-access-sdk:${amvAccessSdkVersion}"
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.volley:volley:1.1.0'
+
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:${leakcanaryVersion}"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryVersion}"
+
+    implementation 'com.android.support:appcompat-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    implementation "com.jakewharton:butterknife:${butterknifeVersion}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation('com.android.support.test:runner:0.5') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation('com.android.support.test:rules:0.5') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation('com.android.support.test.espresso:espresso-intents:2.2.2') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
+    testImplementation "junit:junit:${junitVersion}"
+    androidTestImplementation "com.android.support.test:runner:${supportTestVersion}"
+    androidTestImplementation "com.android.support.test:rules:${supportTestVersion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${espressoVersion}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:${espressoVersion}"
 }
