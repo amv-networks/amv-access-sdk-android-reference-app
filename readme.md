@@ -8,6 +8,42 @@ The projects purpose is to provide a basic overview and demonstrate fundamental 
 the Access SDK. It contains examples for downloading access certificates from the backend server
 and starting bluetooth broadcasting with a chosen certificate.
 
+## prerequisites
+
+### environment
+Make sure you have the following software installed:
+ - Android SDK greater or equal to API v23 (Android 6.0) installed.
+ - Java 8
+
+Verifying the Android API version, e.g.:
+```bash
+$ ls -al <PATH_TO_YOUR_ANDROID_SKD>/platforms
+drwxrwx---+ 1 user 0 Feb  7 11:04 ./
+drwxrwx---+ 1 user 0 Nov 13 12:27 ../
+drwx------+ 1 user 0 Sep  5 09:08 android-23/
+drwx------+ 1 user 0 Sep 12 12:51 android-24/
+drwxrwx---+ 1 user 0 Jun  7  2017 android-25/
+drwx------+ 1 user 0 Aug 21 15:51 android-26/
+drwx------+ 1 user 0 Feb  7 11:04 android-27/
+```
+
+Verifying the Java version, e.g.:
+```bash
+$ java -version
+java version "1.8.0_151"
+Java(TM) SE Runtime Environment (build 1.8.0_151-b12)
+Java HotSpot(TM) 64-Bit Server VM (build 25.151-b12, mixed mode)
+```
+
+Verify the project compiles without errors:
+```bash
+$ ./gradlew clean assembleRelease --refresh-dependencies --stacktrace
+...
+BUILD SUCCESSFUL in 1m 29s
+```
+
+## getting started
+
 ### api credentials
 Copy the `application.properties.template` file to `application.properties` and provide your own
 credentials. Please keep in mind that storing credentials in plaintext is a security risk and
@@ -31,7 +67,7 @@ Integration tests currently cover following scenarios:
 * downloading access certificates for that device certificate
 * visibility of the correct serials/count for the certificates
 
-## how to use the amv Access SDK in your own app
+## how to use the sdk in your own app
 See [jitpack.io/#amv-networks/amv-access-sdk-android](https://jitpack.io/#amv-networks/amv-access-sdk-android)
 for all available versions.
 
@@ -98,19 +134,17 @@ Also,
 Observable<AccessCertificatePair> getCertificates();
 ```
 is available to get the already downloaded access certificates. These certificates will be used
-to start bluetooth broadcasting and you can use the gaining serial in them to get the vehicle serial.
+to start bluetooth broadcasting and you can use the gaining serial to get the vehicle serial.
 
-To revoke a certificate from the server
+Revoking access certificates may or may not be supported by your backend server as it is sometimes
+not desired to let users delete certificates directly from an app, but rather from a backend service.
+
+If however, revoking certificates by clients is enabled, the following method can be called:
 ```java
 void revokeCertificate(AccessCertificate certificate);
 ```
-can be called. If the backend server supports revoking certificate and deletes it successfully the
-locally stored copy will also be removed. Subsequently `onCertificateRevoked();` is called.
+If the backend service deletes the certificate successfully, the locally stored copy will also be removed. 
+Subsequently `onCertificateRevoked();` is called.
 
 Once access certificates are present, they can be displayed to the user. When the user selects a
 certificate, bluetooth broadcasting will be started and the app tries to connect to the vehicle.
-
-# build
-```bash
-$ ./gradlew clean assembleRelease --refresh-dependencies --stacktrace
-```
