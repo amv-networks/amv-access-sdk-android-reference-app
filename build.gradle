@@ -39,7 +39,7 @@ allprojects {
         versionCode = 2
         versionName = '1.1'
 
-        amvAccessSdkVersion = 'v0.0.3'
+        amvAccessSdkVersion = 'v0.0.4'
 
         leakcanaryVersion = '1.5.4'
         butterknifeVersion = '8.8.1'
