@@ -52,14 +52,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation(name: 'hmkit-android', version: '1.0.12', ext: 'aar')
+    implementation(name: 'hmkit-android', version: "${hmkitVersion}", ext: 'aar')
 
     implementation "com.github.amv-networks.amv-access-sdk-android:amv-hm-access-sdk:${amvAccessSdkVersion}"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:${leakcanaryVersion}"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryVersion}"
 
-    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"

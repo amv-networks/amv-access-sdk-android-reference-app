@@ -96,7 +96,7 @@ public class CertificatesActivity extends Activity implements ICertificatesView 
                 .map(DeviceCertificate::getDeviceSerial)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(deviceSerial -> {
-                    titleText.setText(deviceSerial);
+                    titleText.setText(deviceSerial.getSerialNumberHex());
                     refreshButton.setVisibility(VISIBLE);
                     refreshButton.setEnabled(false);
 
@@ -207,7 +207,7 @@ public class CertificatesActivity extends Activity implements ICertificatesView 
             final AccessCertificate cert = items.get(position).getDeviceAccessCertificate();
 
             TextView name = rowView.findViewById(R.id.name_text_view);
-            name.setText(cert.getGainerSerial());
+            name.setText(cert.getGainerSerial().getSerialNumberHex());
 
             TextView date = rowView.findViewById(R.id.date_text_view);
             String startDateTime = dateFormat.format(cert.getStartDate().getTime());
