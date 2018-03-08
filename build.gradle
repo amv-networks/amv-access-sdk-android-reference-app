@@ -39,7 +39,7 @@ allprojects {
         versionCode = 2
         versionName = '1.1'
 
-        amvAccessSdkVersion = 'v0.1.0'
+        amvAccessSdkVersion = 'v0.1.1'
         hmkitVersion = '1.0.12'
 
         leakcanaryVersion = '1.5.4'
