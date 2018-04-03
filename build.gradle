@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0' // needed for jitpack
         classpath 'com.netflix.nebula:nebula-release-plugin:6.1.1'
         classpath 'com.netflix.nebula:nebula-project-plugin:3.4.0'
@@ -39,7 +39,7 @@ allprojects {
         versionCode = 2
         versionName = '1.1'
 
-        amvAccessSdkVersion = 'v0.1.1'
+        amvAccessSdkVersion = 'v0.2.0'
         hmkitVersion = '1.0.12'
 
         leakcanaryVersion = '1.5.4'

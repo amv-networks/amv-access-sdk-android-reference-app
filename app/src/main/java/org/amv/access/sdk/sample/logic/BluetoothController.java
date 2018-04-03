@@ -90,18 +90,22 @@ public class BluetoothController implements IBluetoothController {
 
         this.broadcastStateChangesSubscription = this.communicationManager
                 .observeBroadcastState()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onBroadcastStateChanged);
 
         this.incomingFailureSubscription = this.communicationManager
                 .observeIncomingFailureMessages()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onFailureReceived);
 
         this.vehicleStateSubscription = this.communicationManager
                 .observeVehicleState()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onVehicleState);
 
         this.connectionStateChangesSubscription = this.communicationManager
                 .observeConnectionState()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onConnectionStateChanged);
 
         connect();
@@ -135,6 +139,7 @@ public class BluetoothController implements IBluetoothController {
         updateState(VEHICLE_UPDATING);
 
         this.communicationManager.sendCommand(lockDoorsCommand)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(next -> {
                     Log.d(TAG, "Command successfully sent.");
                 }, error -> {
@@ -147,11 +152,12 @@ public class BluetoothController implements IBluetoothController {
     public void onDestroy() {
         Log.d(TAG, "onDestroy: ");
 
-        terminateConnectionManager().subscribe(next -> {
-            Log.d(TAG, "ConnectionManager terminated.");
-        }, error -> {
-            Log.e(TAG, "An error occurred", error);
-        });
+        try {
+            Boolean success = terminateConnectionManager().blockingFirst();
+            Log.d(TAG, "ConnectionManager terminated: " + success);
+        } catch (Exception e) {
+            Log.e(TAG, "An error occurred", e);
+        }
 
         RefWatcher refWatcher = AccessDemoApplication.getRefWatcher(context);
         refWatcher.watch(this);
@@ -209,6 +215,7 @@ public class BluetoothController implements IBluetoothController {
         }
 
         communicationManager.startConnecting(accessCertificatePair)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(next -> {
                     Log.d(TAG, "Successfully started broadcasting.");
                 }, error -> {
@@ -237,6 +244,8 @@ public class BluetoothController implements IBluetoothController {
             requestVehicleStateUpdate();
         } else if (newState.isConnected()) {
             updateState(State.VEHICLE_CONNECTED);
+        } else if (newState.isDisconnected()) {
+            updateState(State.LOOKING);
         }
     }
 
@@ -251,10 +260,11 @@ public class BluetoothController implements IBluetoothController {
         updateState(VEHICLE_UPDATING);
 
         CommandFactory commandFactory = accessSdk.commandFactory();
-        Command command1 = commandFactory.sendVehicleStatus();
-        this.sentCommand = command1.getType();
+        Command command = commandFactory.sendVehicleStatus();
+        this.sentCommand = command.getType();
 
-        this.communicationManager.sendCommand(command1)
+        this.communicationManager.sendCommand(command)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(next -> {
                     Log.d(TAG, "Command successfully sent.");
                 }, error -> {
