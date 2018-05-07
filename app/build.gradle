@@ -51,9 +51,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation(name: 'hmkit-android', version: "${hmkitVersion}", ext: 'aar')
-
     implementation "com.github.amv-networks.amv-access-sdk-android:amv-hm-access-sdk:${amvAccessSdkVersion}"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:${leakcanaryVersion}"

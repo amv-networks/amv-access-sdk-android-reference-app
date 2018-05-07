@@ -27,6 +27,7 @@ allprojects {
         jcenter()
         google()
         maven { url 'https://jitpack.io' }
+        maven { url "http://jfrog.high-mobility.com/artifactory/gradle-00/" }
     }
 
     project.ext {
@@ -36,11 +37,10 @@ allprojects {
         targetSdkVersion = 27
         compileSdkVersion = 27
 
-        versionCode = 2
-        versionName = '1.1'
+        versionCode = 3
+        versionName = '1.2'
 
-        amvAccessSdkVersion = 'v0.2.0'
-        hmkitVersion = '1.0.12'
+        amvAccessSdkVersion = 'v0.3.0'
 
         leakcanaryVersion = '1.5.4'
         butterknifeVersion = '8.8.1'
