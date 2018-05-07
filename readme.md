@@ -78,6 +78,7 @@ dependencies {
   		repositories {
   			...
   			maven { url 'https://jitpack.io' }
+            maven { url "http://jfrog.high-mobility.com/artifactory/gradle-00/" }
   		}
   	}
 }
