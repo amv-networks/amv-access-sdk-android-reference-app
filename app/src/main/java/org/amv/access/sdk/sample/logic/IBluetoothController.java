@@ -2,8 +2,6 @@ package org.amv.access.sdk.sample.logic;
 
 import android.content.Context;
 
-import org.amv.access.sdk.spi.vehicle.VehicleState;
-
 public interface IBluetoothController {
     enum State {
         BLE_NOT_AVAILABLE, // BLE is not available. check if BLE 4.0 is enabled for this device and turned on
@@ -29,12 +27,17 @@ public interface IBluetoothController {
     void lockUnlockDoors();
 
     /**
-     * Call this when the activity is destroyed
+     * Request current vehicle state.
      */
-    void onDestroy();
+    void requestVehicleState();
 
     /**
-     * @return The vehicle status. It is available only when broadcaster state is VEHICLE_READY
+     * Send disconnect command.
      */
-    VehicleState getVehicleState();
+    void sendDisconnectCommand();
+
+    /**
+     * Call this when the activity is destroyed.
+     */
+    void onDestroy();
 }
