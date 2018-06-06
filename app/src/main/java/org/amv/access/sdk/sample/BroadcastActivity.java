@@ -23,8 +23,11 @@ import org.amv.access.sdk.spi.error.AccessSdkException;
 import org.amv.access.sdk.spi.identity.SerialNumber;
 import org.amv.access.sdk.spi.vehicle.VehicleState;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -42,9 +45,6 @@ public class BroadcastActivity extends Activity implements IBluetoothView {
     @BindView(R.id.connected_view)
     RelativeLayout connectedView;
 
-    @BindView(R.id.lock_state_text_view)
-    TextView lockStateText;
-
     @BindView(R.id.lock_button)
     Button lockButton;
     @BindView(R.id.request_vehicle_state_button)
@@ -53,6 +53,9 @@ public class BroadcastActivity extends Activity implements IBluetoothView {
     Button disconnectButton;
     @BindView(R.id.disconnect_and_stop_broadcasting_button)
     Button disconnectAndStopBroadcastingButton;
+
+    @BindView(R.id.lock_state_text_view)
+    TextView lockStateText;
 
     @BindView(R.id.mileage_text_view)
     TextView mileageTextView;
@@ -63,12 +66,15 @@ public class BroadcastActivity extends Activity implements IBluetoothView {
     @BindView(R.id.doors_switch)
     Switch doorsSwitch;
 
-    BluetoothController controller;
+    @Inject
+    IBluetoothController controller;
 
     private String accessCertId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_broadcast);
@@ -81,14 +87,13 @@ public class BroadcastActivity extends Activity implements IBluetoothView {
             this.accessCertId = givenAccessCertId;
         }
 
-        this.controller = new BluetoothController();
         this.controller.initialize(this, getApplicationContext());
     }
 
     @Override
     protected void onDestroy() {
-        controller.onDestroy();
         super.onDestroy();
+        controller.onDestroy();
 
         RefWatcher refWatcher = AccessDemoApplication.getRefWatcher(this);
         refWatcher.watch(this);
@@ -167,6 +172,20 @@ public class BroadcastActivity extends Activity implements IBluetoothView {
         }
     }
 
+    private void enableButtons() {
+        lockButton.setEnabled(true);
+        requestVehicleStateButton.setEnabled(true);
+        disconnectButton.setEnabled(true);
+        disconnectAndStopBroadcastingButton.setEnabled(true);
+    }
+
+    private void disableButtons() {
+        lockButton.setEnabled(false);
+        requestVehicleStateButton.setEnabled(false);
+        disconnectButton.setEnabled(false);
+        disconnectAndStopBroadcastingButton.setEnabled(false);
+    }
+
     @Override
     public void onVehicleStatusUpdate(VehicleState status) {
         if (status.getMileage().isPresent()) {
@@ -237,20 +256,6 @@ public class BroadcastActivity extends Activity implements IBluetoothView {
                 .setCancelable(false)
                 .setPositiveButton(getString(R.string.ok), (dialog, which) -> finish())
                 .show();
-    }
-
-    private void enableButtons() {
-        lockButton.setEnabled(true);
-        requestVehicleStateButton.setEnabled(true);
-        disconnectButton.setEnabled(true);
-        disconnectAndStopBroadcastingButton.setEnabled(true);
-    }
-
-    private void disableButtons() {
-        lockButton.setEnabled(false);
-        requestVehicleStateButton.setEnabled(false);
-        disconnectButton.setEnabled(false);
-        disconnectAndStopBroadcastingButton.setEnabled(false);
     }
 
     private void updateProgressBarSubtext(boolean show, String text) {

@@ -30,15 +30,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 import static org.amv.access.sdk.sample.CertificatesActivity.TAG;
 import static org.amv.access.sdk.sample.logic.IBluetoothController.State.VEHICLE_READY;
 import static org.amv.access.sdk.sample.logic.IBluetoothController.State.VEHICLE_UPDATING;
 
 public class BluetoothController implements IBluetoothController {
-    private BluetoothCommunicationManager communicationManager;
+    private static final String TAG = "BluetoothController";
+
+    private final AccessSdk accessSdk;
+
     private IBluetoothView view;
     private Context context;
-    private AccessSdk accessSdk;
+
+    private BluetoothCommunicationManager communicationManager;
 
     private final AtomicBoolean initializing = new AtomicBoolean(true);
     private final AtomicLong retryCounter = new AtomicLong(0);
@@ -55,19 +60,16 @@ public class BluetoothController implements IBluetoothController {
     private volatile Disposable incomingFailureSubscription;
     private volatile Disposable vehicleStateSubscription;
 
+    public BluetoothController(AccessSdk accessSdk) {
+        this.accessSdk = requireNonNull(accessSdk);
+    }
+
     @Override
     public void initialize(IBluetoothView view, Context context) {
-        this.view = view;
-        this.context = context;
+        this.view = requireNonNull(view);
+        this.context = requireNonNull(context);
 
-        AmvSdkInitializer.create(context.getApplicationContext())
-                .doOnNext(sdk -> this.accessSdk = sdk)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(sdk -> {
-                    view.onInitializeFinished();
-                }, e -> {
-                    view.onInitializeFailed(AccessSdkException.wrap(e));
-                });
+        view.onInitializeFinished();
     }
 
     @Override
@@ -90,21 +92,25 @@ public class BluetoothController implements IBluetoothController {
 
         this.broadcastStateChangesSubscription = this.communicationManager
                 .observeBroadcastState()
+                .doOnNext(next -> Log.d(TAG, "observeBroadcastState: " + next))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onBroadcastStateChanged);
 
         this.incomingFailureSubscription = this.communicationManager
                 .observeIncomingFailureMessages()
+                .doOnNext(next -> Log.d(TAG, "observeIncomingFailureMessages: " + next))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onFailureReceived);
 
         this.vehicleStateSubscription = this.communicationManager
                 .observeVehicleState()
+                .doOnNext(next -> Log.d(TAG, "observeVehicleState: " + next))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onVehicleState);
 
         this.connectionStateChangesSubscription = this.communicationManager
                 .observeConnectionState()
+                .doOnNext(next -> Log.d(TAG, "observeConnectionState: " + next))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onConnectionStateChanged);
 
@@ -184,7 +190,6 @@ public class BluetoothController implements IBluetoothController {
 
         CommandFactory commandFactory = accessSdk.commandFactory();
         Command disconnectCommand = commandFactory.disconnect();
-        this.sentCommand = disconnectCommand.getType();
 
         this.communicationManager.sendCommand(disconnectCommand)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -300,10 +305,10 @@ public class BluetoothController implements IBluetoothController {
         updateState(VEHICLE_UPDATING);
 
         CommandFactory commandFactory = accessSdk.commandFactory();
-        Command command = commandFactory.sendVehicleStatus();
-        this.sentCommand = command.getType();
+        Command command1 = commandFactory.sendVehicleStatus();
+        this.sentCommand = command1.getType();
 
-        this.communicationManager.sendCommand(command)
+        this.communicationManager.sendCommand(command1)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(next -> {
                     Log.d(TAG, "Command successfully sent.");

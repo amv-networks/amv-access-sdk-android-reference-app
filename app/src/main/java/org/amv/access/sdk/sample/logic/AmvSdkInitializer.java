@@ -26,8 +26,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import io.reactivex.Observable;
 
-@NotThreadSafe
-final class AmvSdkInitializer {
+public final class AmvSdkInitializer {
     private static final String APPLICATION_PROPERTIES_FILE_NAME = "application.properties";
 
     private static final String API_BASE_URL_PROPERTY_NAME = "amv.access.api.baseUrl";
@@ -37,31 +36,6 @@ final class AmvSdkInitializer {
     private static final String IDENTITY_DEVICE_SERIAL_PROPERTY_NAME = "amv.access.identity.deviceSerialNumber";
     private static final String IDENTITY_PUBLIC_KEY_PROPERTY_NAME = "amv.access.identity.publicKey";
     private static final String IDENTITY_PRIVATE_KEY_PROPERTY_NAME = "amv.access.identity.privateKey";
-
-    private static final AtomicReference<AccessSdk> INSTANCE = new AtomicReference<>();
-
-    public static synchronized Observable<AccessSdk> create(Context context) {
-        return create(context, AccessSdkOptionsImpl.builder()
-                .accessApiContext(createAccessApiContext(context))
-                .identity(createIdentity(context).orNull())
-                .build());
-    }
-
-    public static synchronized Observable<AccessSdk> create(Context context, AccessSdkOptions accessSdkOptions) {
-        if (INSTANCE.get() != null) {
-            return Observable.just(INSTANCE.get());
-        }
-
-        try {
-            AccessSdk accessSdk = AmvAccessSdk.create(context, accessSdkOptions);
-
-            INSTANCE.set(accessSdk);
-
-            return accessSdk.initialize();
-        } catch (Exception e) {
-            return Observable.error(e);
-        }
-    }
 
     /**
      * Reads api credentials from a properties file.
@@ -77,7 +51,7 @@ final class AmvSdkInitializer {
      * @param context the application context
      * @return an access api context with values read from a properties file
      */
-    private static AccessApiContext createAccessApiContext(Context context) {
+    public static AccessApiContext createAccessApiContext(Context context) {
         PropertiesReader propertiesReader = new PropertiesReader(context);
         Properties applicationProperties = propertiesReader.getProperties(APPLICATION_PROPERTIES_FILE_NAME);
 
