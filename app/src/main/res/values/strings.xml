@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">amv Access Demo App</string>
     <string name="revoke_alert_title" formatted="false">revoke certificate for %s?</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>

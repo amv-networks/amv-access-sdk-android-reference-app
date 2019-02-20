@@ -88,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/charging_plug" />
 
-                    <android.support.v4.widget.Space
+                    <androidx.legacy.widget.Space
                         android:layout_width="match_parent"
                         android:layout_height="10dp" />
 
@@ -113,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/key" />
 
-                    <android.support.v4.widget.Space
+                    <androidx.legacy.widget.Space
                         android:layout_width="match_parent"
                         android:layout_height="10dp" />
 
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/doors" />
 
-                    <android.support.v4.widget.Space
+                    <androidx.legacy.widget.Space
                         android:layout_width="match_parent"
                         android:layout_height="10dp" />
 
@@ -169,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/mileage" />
 
-                    <android.support.v4.widget.Space
+                    <androidx.legacy.widget.Space
                         android:layout_width="match_parent"
                         android:layout_height="10dp" />
 
@@ -197,7 +197,7 @@
                 android:text="@string/door_lock_state_unknown"
                 android:textSize="18dp" />
 
-            <android.support.v4.widget.Space
+            <androidx.legacy.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 

@@ -2,29 +2,20 @@ package org.amv.access.sdk.sample.logic;
 
 
 import android.content.Context;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.io.BaseEncoding;
 
 import org.amv.access.sdk.hm.AccessApiContext;
-import org.amv.access.sdk.hm.AmvAccessSdk;
-import org.amv.access.sdk.hm.config.AccessSdkOptions;
-import org.amv.access.sdk.hm.config.AccessSdkOptionsImpl;
 import org.amv.access.sdk.sample.util.PropertiesReader;
-import org.amv.access.sdk.spi.AccessSdk;
 import org.amv.access.sdk.spi.crypto.impl.KeysImpl;
 import org.amv.access.sdk.spi.identity.Identity;
 import org.amv.access.sdk.spi.identity.impl.IdentityImpl;
 import org.amv.access.sdk.spi.identity.impl.SerialNumberImpl;
 
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicReference;
-
-import javax.annotation.concurrent.NotThreadSafe;
-
-import io.reactivex.Observable;
 
 public final class AmvSdkInitializer {
     private static final String APPLICATION_PROPERTIES_FILE_NAME = "application.properties";
