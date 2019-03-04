@@ -29,7 +29,6 @@ allprojects {
         maven { url 'https://jitpack.io' }
         maven {
             url "http://jfrog.high-mobility.com/artifactory/gradle-release-local/"
-            //url "http://jfrog.high-mobility.com/artifactory/gradle-00/"
         }
     }
 
@@ -40,10 +39,10 @@ allprojects {
         targetSdkVersion = 27
         compileSdkVersion = 28
 
-        versionCode = 4
-        versionName = '1.3'
+        versionCode = 5
+        versionName = '1.4'
 
-        amvAccessSdkVersion = 'hm-v1-certs-SNAPSHOT'// 'v0.3.1'
+        amvAccessSdkVersion = 'v0.4.0'
 
         leakcanaryVersion = '1.6.3'
         butterknifeVersion = '10.0.0'
